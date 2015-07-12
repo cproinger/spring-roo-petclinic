@@ -9,7 +9,7 @@
     <properties>
         <roo.version>1.1.5.RELEASE</roo.version>
         <spring.version>3.0.5.RELEASE</spring.version>
-        <aspectj.version>1.8.3</aspectj.version>
+        <aspectj.version>1.7.3</aspectj.version>
         <slf4j.version>1.6.1</slf4j.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -374,12 +374,12 @@
             <artifactId>tiles-jsp</artifactId>
             <version>2.2.1</version>
         </dependency>
-    <dependency>
-            <groupId>postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>8.4-702.jdbc3</version>
-            <classifier/>
-        </dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>1.4.187</version>
+		</dependency>
+
     </dependencies>
     <build>
         <plugins>
@@ -389,20 +389,20 @@
                 <version>2.1.1</version>
                 <!-- <configuration> <webXml>target/web.xml</webXml> </configuration> -->
             </plugin>
-<!--             <plugin> -->
-<!--                 <groupId>org.apache.maven.plugins</groupId> -->
-<!--                 <artifactId>maven-compiler-plugin</artifactId> -->
-<!--                 <version>3.2</version> -->
-<!--                 <configuration> -->
-<!--                     <source>1.8</source> -->
-<!--                     <target>1.8</target> -->
-<!--                     <encoding>UTF-8</encoding> -->
-<!--                 </configuration> -->
-<!--             </plugin> -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.2</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>aspectj-maven-plugin</artifactId>
-                <version>1.7</version>
+                <version>1.6</version>
                 <dependencies>
                     <dependency>
                         <groupId>org.aspectj</groupId>
@@ -417,6 +417,9 @@
                 </dependencies>
                 <executions>
                     <execution>
+                    	<phase>
+                    		process-classes
+                    	</phase>
                         <goals>
                             <goal>compile</goal>
                             <goal>test-compile</goal>
@@ -431,8 +434,9 @@
                             <artifactId>spring-aspects</artifactId>
                         </aspectLibrary>
                     </aspectLibraries>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                    <complianceLevel>1.7</complianceLevel>
                 </configuration>
             </plugin>
             <plugin>
@@ -520,25 +524,6 @@
                         <contextPath>/${project.name}</contextPath>
                     </webAppConfig>
                 </configuration>
-            </plugin>
-        <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>selenium-maven-plugin</artifactId>
-                <version>1.1</version>
-                <configuration>
-                <browser>*firefox</browser>
-                <suite>src/main/webapp/selenium/test-suite.xhtml</suite>
-                <results>${project.build.directory}/selenium.html</results>
-                <startURL>http://localhost:4444/</startURL>
-            </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.seleniumhq.selenium</groupId>
-                        <artifactId>selenium-server</artifactId>
-                        <version>2.0rc3</version>
-                        <classifier/>
-                    </dependency>
-                </dependencies>
             </plugin>
         </plugins>
     </build>
